@@ -17,6 +17,7 @@ import Fifthpage from "./Fifthpage";
 import Treasury from './Treasury';
 import { Card } from "react-bootstrap";
 import bdo from "./bdo";
+import oracle from "./bdooracle";
 
 function Moa(){
   
@@ -43,7 +44,7 @@ function Moa(){
     setbalance(await lottery.methods.balanceOf(accounts[0]).call());
     settotalsupply(await lottery.methods.totalSupply().call());
     setprice( await Treasury.methods.getDollarPrice().call());
-    //setprice( await oracle.methods.getDollarPrice().call());
+   // setprice( await oracle.methods.getDollarPrice().call());
     settokenname(await lottery.methods.name().call());
     settokensymbol(await lottery.methods.symbol().call());
     

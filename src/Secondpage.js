@@ -1,7 +1,7 @@
 import React from "react";
 import history from "./utils/history";
 import BDO from "./BDO.png"
-
+import 'moment-timezone';
 import {useState,useEffect} from 'react';
 import web3 from './web3';
 import lottery from './storeabicon';//this line import lottery folder
@@ -18,6 +18,8 @@ import bdooracle from "./bdooracle";
 import boardroom from "./Boardroom";
 import Homepage from "./Moa";
 import bdo from "./bdo";
+import Black from "./black";
+import Staking from "./black";
 import share from "./share";
 import { Modal, Button,InputGroup,FormControl } from "react-bootstrap";
 
@@ -31,8 +33,13 @@ function MyVerticallyCenteredModal1(props) {
   var [app,setapprove] = useState("");
   var [stake,setstake] = useState("");
   var [amount,setamount]= useState("");
+  var [d,setd] = useState("");
+  var [d,setd] = useState("");
+  var [d3,setd] = useState("");
+  var [d4,setd] = useState("");
   const [tid,setId] = useState("");
   const [tid1,setId1] = useState("");
+  const [d1,setd1] = useState("");
   const [Seigniorage,setSeigniorage] = useState("");
   var [withdraw,setwithdraw] = useState("");
   var [bal,setbal] = useState("");
@@ -46,15 +53,16 @@ function MyVerticallyCenteredModal1(props) {
 
     const accounts = await  web3.eth.getAccounts();
     var te=document.getElementById("tid").value;
-    alert(te)
-    te=te*1000000;
-    te=te+"000000000000";
-    setstake(await boardroom.methods.stake(te).
+   
+     var te1=te*1000000000;
+     alert(te1)
+     //var te2=te1+"000000000000";
+    setstake(await boardroom.methods.deposit(te1).
     send({
       from: accounts[0]
      
     }));
-    setSeigniorage(await boardroom.methods.allocateSeigniorage(te).send({ from:accounts[0]}));
+   // setSeigniorage(await boardroom.methods.allocateSeigniorage(te).send({ from:accounts[0]}));
     
   } 
 
@@ -106,12 +114,12 @@ function MyVerticallyCenteredModal2(props) {
     var x1=document.getElementById("mymodal1").style.visibility="hidden";
 
     const accounts = await  web3.eth.getAccounts();
-    var te1=document.getElementById("tid1").value;
-    alert(te1);
-    te1=te1*1000000;
-    te1=te1+"000000000000";
-
-    setwithdraw(await boardroom.methods.withdraw(te1).
+    var te2=document.getElementById("tid1").value;
+   
+    var te3=te2*1000000000;
+    //te1=te1+"000000000000";
+    alert(te3);
+    setwithdraw(await boardroom.methods.withdraw(te3).
     send({
       from: accounts[0]
      
@@ -166,8 +174,11 @@ function Secondpage() {
   var [getCurrentEpoch,setepoch] = useState("");
 
   var [nextseigniorage,setnextseigniorage] = useState("");
-
-  
+  var [getnextEpoch,setepoch1] = useState("");
+  var [getrewardStart,setepoch2] = useState("");
+  var [d,setd] = useState("");
+  var [d3,setd] = useState("");
+  var [d4,setd] = useState("");
   const [geta,setgeta] = useState("");
   var [rate,setrate] = useState("");
   var [twap,settwap] = useState("");
@@ -177,7 +188,7 @@ function Secondpage() {
   var [stake,setstake] = useState("");
   var [amount,setamount]= useState("");
   const [tid,setId] = useState("");
-  const [tid1,setId1] = useState("");
+  const [d1,setd1] = useState("");
   const [Seigniorage,setSeigniorage] = useState("");
   var [withdraw,setwithdraw] = useState("");
   var [bal,setbal] = useState("");
@@ -189,36 +200,37 @@ function Secondpage() {
       const approve = async (event) =>{
         event.preventDefault();
         const accounts = await  web3.eth.getAccounts();
-        setapprove(await share.methods.approve("0x409e9135Ab9005abaAEcC6C03E300809848a41E4","999999999900000000000000000000000000000").
+        setapprove(await share.methods.approve("0x0c1b08e9394B26997Ac8aaDc332aC9891D8FF9b2","999999999900000000000000000000000000000").
         send({
           from: accounts[0]
          
         }));
       }
-      const Staked = async (event) =>{
-        event.preventDefault();
-        const accounts = await  web3.eth.getAccounts();
-        var te=document.getElementById("tid").value;
-        alert(te)
-        setstake(await boardroom.methods.stake(te).
-        send({
-          from: accounts[0]
+      // const Staked = async (event) =>{
+      //   event.preventDefault();
+      //   const accounts = await  web3.eth.getAccounts();
+      //   var te=document.getElementById("tid").value;
+      //   alert(te)
+      //   setstake(await boardroom.methods.deposit(te).
+      //   send({
+      //     from: accounts[0]
          
-        }));
-        setSeigniorage(await boardroom.methods.allocateSeigniorage(te).send({ from:accounts[0]}));
+      //   }));
+      //   setSeigniorage(await boardroom.methods.allocateSeigniorage(te).send({ from:accounts[0]}));
         
-      }
-      const Withdraw = async (event) =>{
-        event.preventDefault();
-        const accounts = await  web3.eth.getAccounts();
-        var te1=tid1;
-        alert(te1)
-        setwithdraw(await boardroom.methods.withdraw(te1).
-        send({
-          from: accounts[0]
+      // }
+      // const Withdraw = async (event) =>{
+      //   event.preventDefault();
+      //   const accounts = await  web3.eth.getAccounts();
+      //   var te=document.getElementById("tid1").value;
+      //   //var te1=tid1;
+      //   //alert(te1)
+      //   setwithdraw(await boardroom.methods.withdraw(te).
+      //   send({
+      //     from: accounts[0]
          
-        }));
-      }
+      //   }));
+      // }
       const Claim = async (event) =>{
         event.preventDefault();
         const accounts = await web3.eth.getAccounts();
@@ -228,26 +240,59 @@ function Secondpage() {
         }));
         alert("Rewards claimed");
       }
+       
+       
+       var check=async()=>{
+         alert("completed");  
+         const accounts = await  web3.eth.getAccounts();
+         setepoch1(await boardroom.methods.holderUnstakeRemainingTime(accounts[0]).call());
+        
+         d=new Date(getnextEpoch * 1000);
+         var d1=(d.toLocaleTimeString('en-US'));
+
+      // // var dateStringWithTime = moment(d).format('HH:MM:SS');
+
+       
+         alert(d1)
+         //setd1(d1);
+         document.getElementById("nextepo").innerHTML =d1;
+       }
+
+
+       useEffect(()=>{check()},[]);
+
+
+
+       var check2=async()=>{
+        alert("completed");  
+        const accounts = await  web3.eth.getAccounts();
+        setepoch2(await boardroom.methods.rewardStartDate().call());
+       
+        d3=new Date(getrewardStart * 1000);
+        var d4=(d3.toLocaleTimeString('en-US'));
+
+     // // var dateStringWithTime = moment(d).format('HH:MM:SS');
+
       
-      useEffect(()=>{bal2()},[])
+        alert(d1)
+        //setd1(d1);
+        document.getElementById("nextreward").innerHTML =d4;
+      }
+      useEffect(()=>{check2()},[]);
   const bal2 = async () => {
     
       const accounts = await  web3.eth.getAccounts();
-      settwap(await bdooracle.methods.twap("0x8352A0a849cD181Cc7Ef61F972b7B8E5d677b66D","1000000000000000000").call());   
-      //setrate(await Treasury.events.maxSupplyExpansionPercent);
-      setepoch(await bdooracle.methods.getCurrentEpoch().call());
-      setstaked(await boardroom.methods.totalSupply().call());
-    setnextseigniorage(await Treasury.methods.nextEpochPoint().call()); 
-    setlock(await bdo.methods.balanceOf("0xF277De5B326C3538c81e73cE9a6f7232eAEE4439").call()); 
-    setbal(await boardroom.methods.balanceOf(accounts[0]).call());  
-    setear(await boardroom.methods.earned(accounts[0]).call()); 
-     alert("completed");    
+      setear(await boardroom.methods.pendingBlack(accounts[0]).call()); 
+      setnextseigniorage(await boardroom.methods.holderUnstakeRemainingTime(accounts[0]).call()); 
+      setlock(await share.methods.balanceOf("0x0c1b08e9394B26997Ac8aaDc332aC9891D8FF9b2").call());
+      setepoch(await boardroom.methods.rewardStartDate().call());  
+     
 
    
 
       
   };
-    
+  useEffect(()=>{bal2()},[ear],[nextseigniorage]) 
   return (
     <div className="light">
       
@@ -267,26 +312,32 @@ function Secondpage() {
 <div class="container">
   <div class="row">
   <div class="col align-self-start">
-    <label class="epoch">Epoch :<span>{getCurrentEpoch}</span></label>
+    <label class="epoch">rewardStartDate:<span  id="nextreward"></span></label>
   </div>
   </div>
   <br/>
 
   <div class="row">
     <div class="col">
-      <label class="ll" width="100%">nextEpochPoint<span><br/>{nextseigniorage}</span></label>
+      <label class="ll" width="100%">UnStackPoint<br/><span  id="nextepo"> </span></label>
     </div>
-    <div class="col">
+    {/* <div class="col">
       <label class="ll">eBNBmom Price(TWAP)<span><br/>{twap/1000000000000000000}</span></label>
-    </div>
+    </div> */}
   </div><br/>
   <br/>
   <div class="row">
+    {/* <div class="col">
+      <label class="ll"> Black Staked<span><br/>{staked}</span></label>
+    </div> */}
+    
     <div class="col">
-      <label class="ll"> SeBNBmom Staked<span><br/>{staked}</span></label>
+      <label class="ll">Black Staked<span><br/>{locked}</span></label>
     </div>
-    <div class="col">
-      <label class="ll">Locked value<span><br/>{locked}</span></label>
+    <div class="row">
+    {/* <div class="col">
+      <label class="ll"  width="100%">nextEpochPoint<br/><span id="nextepo"><br/></span></label>
+</div> */}
     </div>
   </div>
 </div>
@@ -325,7 +376,7 @@ function Secondpage() {
           <div class="col ll2">
             <br/>
             <br/>
-          <b>Your Earned amount  :{ear}</b><br /><br/>
+          <b>Your Earned amount  :{ear/1000000000}</b><br /><br/>
   <button  class="btn btn-primary" onClick={Claim}>ClaimRewards</button>
      <br/>
      <br/>
