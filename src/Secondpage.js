@@ -200,7 +200,7 @@ function Secondpage() {
       const approve = async (event) =>{
         event.preventDefault();
         const accounts = await  web3.eth.getAccounts();
-        setapprove(await share.methods.approve("0x0c1b08e9394B26997Ac8aaDc332aC9891D8FF9b2","999999999900000000000000000000000000000").
+        setapprove(await share.methods.approve("0xf1ff561190950Ed9020fe62DB83045dED760A606","999999999900000000000000000000000000000").
         send({
           from: accounts[0]
          
@@ -284,7 +284,7 @@ function Secondpage() {
       const accounts = await  web3.eth.getAccounts();
       setear(await boardroom.methods.pendingBlack(accounts[0]).call()); 
       setnextseigniorage(await boardroom.methods.holderUnstakeRemainingTime(accounts[0]).call()); 
-      setlock(await share.methods.balanceOf("0x0c1b08e9394B26997Ac8aaDc332aC9891D8FF9b2").call());
+      setlock(await share.methods.balanceOf("0xf1ff561190950Ed9020fe62DB83045dED760A606").call());
       setepoch(await boardroom.methods.rewardStartDate().call());  
      
 
